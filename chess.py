@@ -243,7 +243,9 @@ class Board:
             elif "black king" in str(self.get_piece(coord)):
                 bkingcoord = coord
         for coord in self.coords():
-            if self.valid_move(coord, wkingcoord):
+            if self.winner == "black" or self.winner == "White":
+                break
+            elif self.valid_move(coord, wkingcoord):
                 print("white is in check!")
                 break
             elif self.valid_move(coord, bkingcoord):
