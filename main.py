@@ -1,18 +1,14 @@
 from chess import Board, King, Queen, Bishop, Knight, Rook, Pawn
-from interface import ConsoleInterface
-import time
+from interface import ConsoleInterface, TextInterface
 
-ui = ConsoleInterface()
-game = Board(debug=False, inputf=ui.get_player_input, printf=ui.set_msg,)
+ui = TextInterface()
+game = Board(
+    debug=False, outputf=ui.set_msg, inputf=ui.get_player_input, setboardf=ui.set_board
+)
 game.start()
 while game.winner is None:
-    ui.set_board(game.display())
-    while True:
-        start, end = game.prompt()
-        if game.valid_move(start, end):
-            break
-        else:
-            ui.set_msg(f"Invalid move: {start} -> {end}")
+    game.display()
+    start, end = game.prompt()
     game.update(start, end)
     game.next_turn()
-ui.set_msg(f"Game over. {game.winner()} player wins!")
+print(f"Game over. {game.winner} player wins!")

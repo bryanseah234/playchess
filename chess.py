@@ -1,7 +1,8 @@
-class Board:
-    from datetime import datetime
+from datetime import datetime
 
-    starttime = datetime.today()
+
+class Board:
+
     """
     The game board is represented as an 8×8 grid,
     with each position on the grid described as
@@ -22,6 +23,8 @@ class Board:
         self.debug = debug
         self.inputf = kwargs.get("inputf", input)
         self.printf = kwargs.get("outputf", print)
+        self.setboardf = kwargs.get("setboardf", print)
+        self.starttime = datetime.today()
 
     def coords(self):
         """Return list of piece coordinates."""
@@ -96,34 +99,28 @@ class Board:
         """
         # helper function to generate symbols for piece
         # Row 7 is at the top, so print in reverse order
-        if self.debug == True:
-            self.printf("== DISPLAY ==")
-        if self.turn == "white":
-            self.printf("\033[1;30;47m")  # black w white bg
-        if self.turn == "black":
-            self.printf("\033[1;37;40m")  # white w blk bg
-        self.printf("           [ column ]          ", end="\n")
-        self.printf("        0\\1\\2\\3\\4\\5\\6\\7\\       ")
-        for row in range(7, -1, -1):
-            self.printf(f" [row {row}]", end="")
-            # for i in range(0,8):
-            # self.printf(i, end="")
-            for col in range(8):
-                coord = (col, row)  # tuple
+        dis = ""
+        for row in range(8, -1, -1):
+            for col in range(0, 8):
+                if row == 8 and col == 0:
+                    dis += "  "
+                if row == 8:
+                    dis += f"{col}"
+                if col == 0 and row != 8:
+                    dis += f"{row} "
+                coord = (col, row)
                 if coord in self.coords():
                     piece = self.get_piece(coord)
-                    # not here
-                    self.printf(f"{piece.symbol()}", end="")
+                    dis += f"{piece.symbol()}"
                 else:
                     piece = None
-                    self.printf(" ", end="")
-                if col == 7:  # Put line break atthe end
-                    self.printf(f" [row {row}]")
-                else:  # Print a space between pieces
-                    self.printf(" ", end="")
-        self.printf("        0/1/2/3/4/5/6/7/       ")
-        self.printf("           [ column ]          ", end="\n")
-        # self.printf("\033[1;37;40m") #white w blk bg
+                    dis += " "
+                if col == 7:
+                    dis += "\n"
+                else:
+                    if row != 8:
+                        dis += " "
+        self.setboardf(dis)
 
     def prompt(self):
         """
@@ -180,13 +177,7 @@ class Board:
             else:
                 start, end = split_and_convert(inputstr)
                 if self.valid_move(start, end):
-                    # self.printf(
-                    #     self.get_piece(start),
-                    #     f"{start[0]}{start[1]} -> {end[0]}{end[1]}",
-                    # )
-                    # print (start,end)
-                    self.printf(printmove())
-                    endtime = self.datetime.today()
+                    endtime = datetime.today()
                     with open("moves.txt", "a+") as f:
                         f.write(
                             f"{endtime}: {self.turn} {start[0]}{start[1]} -> {end[0]}{end[1]}\n"
@@ -194,7 +185,7 @@ class Board:
                     timetaken = endtime - self.starttime
                     timetaken_inseconds = timetaken.total_seconds()
                     self.printf(
-                        f"{self.turn} player took {timetaken_inseconds}seconds to make a move."
+                        f"{printmove()} \n{self.turn} player took {timetaken_inseconds}seconds to make a move."
                     )
                     return start, end
                 else:
@@ -231,6 +222,7 @@ class Board:
         self.win()
         self.promotion()
         self.check()
+        self.starttime = datetime.today()
 
     def win(self):
         if self.debug == True:
@@ -423,7 +415,7 @@ class Rook(BasePiece):
 
 class Pawn(BasePiece):
     name = "pawn"
-    sym = {"white": "♙", "black": "♟︎"}
+    sym = {"white": "♙", "black": "♟"}
 
     def __repr__(self):
         return f"Pawn('{self.name}')"
