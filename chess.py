@@ -1,5 +1,6 @@
 class Board:
     from datetime import datetime
+
     starttime = datetime.today()
     """
     The game board is represented as an 8×8 grid,
@@ -16,9 +17,11 @@ class Board:
     00  10  20  30  40  50  60  70
     """
 
-    def __init__(self, debug=False):
+    def __init__(self, debug=False, **kwargs):
         self.position = {}
         self.debug = debug
+        self.inputf = kwargs.get("inputf", input)
+        self.printf = kwargs.get("outputf", print)
 
     def coords(self):
         """Return list of piece coordinates."""
@@ -94,33 +97,33 @@ class Board:
         # helper function to generate symbols for piece
         # Row 7 is at the top, so print in reverse order
         if self.debug == True:
-            print("== DISPLAY ==")
+            self.printf("== DISPLAY ==")
         if self.turn == "white":
-            print("\033[1;30;47m")  # black w white bg
+            self.printf("\033[1;30;47m")  # black w white bg
         if self.turn == "black":
-            print("\033[1;37;40m")  # white w blk bg
-        print("           [ column ]          ", end="\n")
-        print("        0\\1\\2\\3\\4\\5\\6\\7\\       ")
+            self.printf("\033[1;37;40m")  # white w blk bg
+        self.printf("           [ column ]          ", end="\n")
+        self.printf("        0\\1\\2\\3\\4\\5\\6\\7\\       ")
         for row in range(7, -1, -1):
-            print(f" [row {row}]", end="")
+            self.printf(f" [row {row}]", end="")
             # for i in range(0,8):
-            # print(i, end="")
+            # self.printf(i, end="")
             for col in range(8):
                 coord = (col, row)  # tuple
                 if coord in self.coords():
                     piece = self.get_piece(coord)
                     # not here
-                    print(f"{piece.symbol()}", end="")
+                    self.printf(f"{piece.symbol()}", end="")
                 else:
                     piece = None
-                    print(" ", end="")
+                    self.printf(" ", end="")
                 if col == 7:  # Put line break atthe end
-                    print(f" [row {row}]")
+                    self.printf(f" [row {row}]")
                 else:  # Print a space between pieces
-                    print(" ", end="")
-        print("        0/1/2/3/4/5/6/7/       ")
-        print("           [ column ]          ", end="\n")
-        # print("\033[1;37;40m") #white w blk bg
+                    self.printf(" ", end="")
+        self.printf("        0/1/2/3/4/5/6/7/       ")
+        self.printf("           [ column ]          ", end="\n")
+        # self.printf("\033[1;37;40m") #white w blk bg
 
     def prompt(self):
         """
@@ -130,7 +133,7 @@ class Board:
         e.g. 07 27
         """
         if self.debug == True:
-            print("== PROMPT ==")
+            self.printf("== PROMPT ==")
 
         def valid_format(inputstr):
             """
@@ -165,33 +168,37 @@ class Board:
             )
 
         while True:
-            inputstr = input(f"{self.turn.title()} player: ")
+            inputstr = self.inputf(f"{self.turn.title()} player: ")
             if not valid_format(inputstr):
-                print(
+                self.printf(
                     "Invalid input. Please enter your move in the "
                     "following format: __ __ where '__' contains digit 0 to 7.\n"
                     "Example: [current-column][current-row] [new-column][new-row]"
                 )
             elif not valid_num(inputstr):
-                print("Invalid input. Move digits should be 0-7.")
+                self.printf("Invalid input. Move digits should be 0-7.")
             else:
                 start, end = split_and_convert(inputstr)
                 if self.valid_move(start, end):
-                    # print(
+                    # self.printf(
                     #     self.get_piece(start),
                     #     f"{start[0]}{start[1]} -> {end[0]}{end[1]}",
                     # )
                     # print (start,end)
-                    print(printmove())
+                    self.printf(printmove())
                     endtime = self.datetime.today()
-                    with open('moves.txt', 'a+') as f:
-                        f.write(f'{endtime}: {self.turn} {start[0]}{start[1]} -> {end[0]}{end[1]}\n')
+                    with open("moves.txt", "a+") as f:
+                        f.write(
+                            f"{endtime}: {self.turn} {start[0]}{start[1]} -> {end[0]}{end[1]}\n"
+                        )
                     timetaken = endtime - self.starttime
                     timetaken_inseconds = timetaken.total_seconds()
-                    print(f"{self.turn} player took {timetaken_inseconds}seconds to make a move.")
+                    self.printf(
+                        f"{self.turn} player took {timetaken_inseconds}seconds to make a move."
+                    )
                     return start, end
                 else:
-                    print(f"Invalid move for {self.get_piece(start)}.")
+                    self.printf(f"Invalid move for {self.get_piece(start)}.")
 
     def valid_move(self, start, end):
         """
@@ -218,7 +225,7 @@ class Board:
     def update(self, start, end):
         """Update board information with the player's move."""
         if self.debug == True:
-            print("== UPDATE ==")
+            self.printf("== UPDATE ==")
         self.remove(end)
         self.move(start, end)
         self.win()
@@ -227,7 +234,7 @@ class Board:
 
     def win(self):
         if self.debug == True:
-            print("== CHECKING FOR WINNER ==")
+            self.printf("== CHECKING FOR WINNER ==")
         piecelist = [str(pieces) for pieces in self.pieces()]
         if "black king" not in piecelist:
             self.winner = "White"
@@ -236,7 +243,7 @@ class Board:
 
     def check(self):
         if self.debug == True:
-            print(" == CHECKING IF KING IS CHECKED ==")
+            self.printf(" == CHECKING IF KING IS CHECKED ==")
         for coord in self.coords():
             if "white king" in str(self.get_piece(coord)):
                 wkingcoord = coord
@@ -246,10 +253,10 @@ class Board:
             if self.winner == "black" or self.winner == "White":
                 break
             elif self.valid_move(coord, wkingcoord):
-                print("white is in check!")
+                self.printf("white is in check!")
                 break
             elif self.valid_move(coord, bkingcoord):
-                print("black is in check!")
+                self.printf("black is in check!")
                 break
 
     def promotion(self):
@@ -257,7 +264,7 @@ class Board:
         Check if last row contains opposing pawn and swap to queen if true
         """
         if self.debug == True:
-            print("== CHECKING FOR PROMOTION ==")
+            self.printf("== CHECKING FOR PROMOTION ==")
         black_last_row = [
             (0, 7),
             (1, 7),
@@ -290,7 +297,7 @@ class Board:
     def next_turn(self):
         """Hand the turn over to the other player."""
         if self.debug == True:
-            print("== NEXT TURN ==")
+            self.printf("== NEXT TURN ==")
         if self.turn == "white":
             self.turn = "black"
         elif self.turn == "black":
@@ -458,3 +465,4 @@ class Pawn(BasePiece):
             else:
                 return False
         return False
+

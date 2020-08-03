@@ -1,21 +1,18 @@
 from chess import Board, King, Queen, Bishop, Knight, Rook, Pawn
+refactor from interface import ConsoleInterface
 import time
 
-print(
-    "\033[2;37;44m               ##               "
-    "\n        Proudly created by:     "
-    "\n            ZhengNan            "
-    "\n              Vina              "
-    "\n              SiYi              "
-    "\n             Bryan              "
-    "\n             David              "
-)
-game = Board()
+ui = ConsoleInterface()
+game = Board(debug=False, inputf=ui.get_player_input, printf=ui.set_msg,)
 game.start()
-
 while game.winner is None:
-    game.display()
-    start, end = game.prompt()
+    ui.set_board(game.display())
+    while True:
+        start, end = game.prompt()
+        if game.valid_move(start, end):
+            break
+        else:
+            ui.set_msg(f"Invalid move: {start} -> {end}")
     game.update(start, end)
     game.next_turn()
-print(f"Game over. {game.winner} player wins!")
+ui.set_msg(f"Game over. {game.winner()} player wins!")
