@@ -1,5 +1,5 @@
 from chess import Board, King, Queen, Bishop, Knight, Rook, Pawn
-refactor from interface import ConsoleInterface
+from interface import ConsoleInterface
 import time
 
 ui = ConsoleInterface()
