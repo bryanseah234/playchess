@@ -107,7 +107,7 @@ class Board:
                 if row == 8:
                     dis += f"{col}"
                 if col == 0 and row != 8:
-                    dis += f"{row} "
+                    dis += f" {row} "
                 coord = (col, row)
                 if coord in self.coords():
                     piece = self.get_piece(coord)
@@ -168,12 +168,12 @@ class Board:
             inputstr = self.inputf(f"{self.turn.title()} player: ")
             if not valid_format(inputstr):
                 self.printf(
-                    "Invalid input. Please enter your move in the "
-                    "following format: __ __ where '__' contains digit 0 to 7.\n"
-                    "Example: [current-column][current-row] [new-column][new-row]"
+                    " Invalid input. Please enter your move in the "
+                    " following format: __ __ where '__' contains digit 0 to 7.\n"
+                    " Example: [current-column][current-row] [new-column][new-row]"
                 )
             elif not valid_num(inputstr):
-                self.printf("Invalid input. Move digits should be 0-7.")
+                self.printf(" Invalid input. Move digits should be 0-7.")
             else:
                 start, end = split_and_convert(inputstr)
                 if self.valid_move(start, end):
@@ -185,11 +185,11 @@ class Board:
                     timetaken = endtime - self.starttime
                     timetaken_inseconds = timetaken.total_seconds()
                     self.printf(
-                        f"{printmove()} \n{self.turn} player took {timetaken_inseconds}seconds to make a move."
+                        f"\n {printmove()} \n {self.turn} player took {round(timetaken_inseconds, 2)}s to make a move."
                     )
                     return start, end
                 else:
-                    self.printf(f"Invalid move for {self.get_piece(start)}.")
+                    self.printf(f" Invalid move for {self.get_piece(start)}.")
 
     def valid_move(self, start, end):
         """
@@ -419,9 +419,6 @@ class Pawn(BasePiece):
 
     def __repr__(self):
         return f"Pawn('{self.name}')"
-
-    def isvalid(self, start: tuple, end: tuple, end_piece):
-        """Pawn can only move 1 step forward."""
 
     def pawnfirstmove(self, start, end):
         if self.colour == "black":
