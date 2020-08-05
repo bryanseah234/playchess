@@ -130,3 +130,6 @@ dmypy.json
 
 # replit
 .replit
+
+#unrequired files
+moves.txt
