@@ -29,23 +29,26 @@ class TextInterface:
     def __init__(self):
         stdscr = curses.initscr()
         self.boardwin = curses.newwin(11, 21, 1, curses.COLS // 2 - (21 // 2))
-        self.msgwin = curses.newwin(5, 40, 12, curses.COLS // 2 - (40 // 2))
+        self.msgwin = curses.newwin(5, 60, 12, curses.COLS // 2 - (60 // 2))
         self.inputwin = curses.newwin(3, 30, 18, curses.COLS // 2 - (30 // 2))
-
+        stdscr.refresh()
 
     def set_board(self, inputstr):
         self.boardwin.addstr(1, 2, inputstr)
         self.boardwin.box()
+        self.boardwin.addstr(0, 2, "Board")
         self.boardwin.refresh()
 
     def set_msg(self, inputstr):
         self.msgwin.addstr(0, 1,inputstr)
         self.msgwin.box()
+        self.msgwin.addstr(0, 2, "Message")
         self.msgwin.refresh()
 
     def get_player_input(self, msg):
-        self.inputwin.addstr(1, 1, msg)
         self.inputwin.box()
+        self.inputwin.addstr(0,2,"Input")
+        self.inputwin.addstr(1, 1, msg)
         self.inputwin.refresh()
         value = self.inputwin.getstr().decode("utf-8")
         self.inputwin.erase()

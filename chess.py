@@ -168,10 +168,7 @@ class Board:
             inputstr = self.inputf(f"{self.turn.title()} player: ")
             if not valid_format(inputstr):
                 self.printf(
-                    " Invalid input. Please enter your move in the "
-                    " following format: __ __ where '__' contains digit 0 to 7.\n"
-                    " Example: [current-column][current-row] [new-column][new-row]"
-                )
+                    "Invalid input. Please enter your move in the following format: __ __ where '__' contains digit 0 to 7.")
             elif not valid_num(inputstr):
                 self.printf(" Invalid input. Move digits should be 0-7.")
             else:
@@ -189,7 +186,7 @@ class Board:
                     )
                     return start, end
                 else:
-                    self.printf(f" Invalid move for {self.get_piece(start)}.")
+                    self.printf(f"Invalid move for {self.get_piece(start)}.")
 
     def valid_move(self, start, end):
         """
@@ -219,9 +216,9 @@ class Board:
             self.printf("== UPDATE ==")
         self.remove(end)
         self.move(start, end)
+        self.check()
         self.win()
         self.promotion()
-        self.check()
         self.starttime = datetime.today()
 
     def win(self):
@@ -245,10 +242,10 @@ class Board:
             if self.winner == "black" or self.winner == "White":
                 break
             elif self.valid_move(coord, wkingcoord):
-                self.printf("white is in check!")
+                self.printf("\n white is in check!     ")
                 break
             elif self.valid_move(coord, bkingcoord):
-                self.printf("black is in check!")
+                self.printf("\n black is in check!     ")
                 break
 
     def promotion(self):
