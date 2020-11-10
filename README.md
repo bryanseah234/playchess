@@ -6,6 +6,10 @@ A repository for a chess game in Python (NYJC J1 Computing Assignment 12)
 
 ZhengNan, SiYi, Vina, Bryan, David
 
+## Features
+
+See [criteria.md](criteria.md)
+
 ## Grading rubrics
 
 See [grading.md](grading.md)
@@ -20,4 +24,5 @@ Method 1
 Method 2
 1. Download the code as a zip file
 2. Extract the files
-3. Run the 'chessgame.exe' file to start
+3. Run the 'ChessGameInstaller.exe' to install
+4. Run 'ChessGame.exe' to start game
