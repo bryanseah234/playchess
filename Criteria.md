@@ -1,17 +1,3 @@
-# GingerBread ChessGame
-
-A repository for a chess game in Python (NYJC J1 Computing Assignment 12)
-
-## Team members
-
-ZhengNan, SiYi, Vina, Bryan, David
-
-## Grading rubrics
-
-See [grading.md](grading.md)
-
-
-
 ## Team Setup
 
 1. Team leader is to fork the ChessGame repository (using the fork button) on Github. You now have a copy of the ChessGame repository under your account.
