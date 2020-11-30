@@ -1,20 +1,19 @@
 # GingerBread ChessGame
-
 A repository for a chess game in Python (NYJC J1 Computing Assignment 12)
 
-## Team members
+## Disclaimer:
+1. NONE
 
+## Team members:
 ZhengNan, SiYi, Vina, Bryan, David
 
-## Features
-
+## Features:
 See [criteria.md](criteria.md)
 
-## Grading rubrics
-
+## Grading rubrics:
 See [grading.md](grading.md)
 
-## Demo
+## Instructions:
 
 Method 1
 1. Download the code as a zip file
