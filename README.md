@@ -5,7 +5,7 @@ A repository for a chess game in Python (NYJC J1 Computing Assignment 12)
 1. NONE
 
 ## Team members:
-ZhengNan, SiYi, Vina, Bryan, David
+Zhen gNan, Si Yi, Vina, Bryan, David
 
 ## Features:
 See [criteria.md](criteria.md)
