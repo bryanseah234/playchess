@@ -40,14 +40,14 @@ class TextInterface:
         self.boardwin.refresh()
 
     def set_msg(self, inputstr):
-        self.msgwin.addstr(0, 1,inputstr)
+        self.msgwin.addstr(0, 1, inputstr)
         self.msgwin.box()
         self.msgwin.addstr(0, 2, "Message")
         self.msgwin.refresh()
 
     def get_player_input(self, msg):
         self.inputwin.box()
-        self.inputwin.addstr(0,2,"Input")
+        self.inputwin.addstr(0, 2, "Input")
         self.inputwin.addstr(1, 1, msg)
         self.inputwin.refresh()
         value = self.inputwin.getstr().decode("utf-8")

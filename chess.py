@@ -194,7 +194,7 @@ class Board:
         1. There is a start piece of the player's colour
         2. There is no end piece, or end piece is not of player's colour
         3. The move is not valid for the selected piece
-        
+
         Returns False otherwise
         """
         start_piece = self.get_piece(start)
@@ -320,7 +320,7 @@ class BasePiece:
         - x, the number of spaces moved horizontally,
         - y, the number of spaces moved vertically,
         - dist, the total number of spaces moved.
-        
+
         positive integers indicate upward or rightward direction,
         negative integers indicate downward or leftward direction.
         dist is always positive.
@@ -451,4 +451,3 @@ class Pawn(BasePiece):
             else:
                 return False
         return False
-
