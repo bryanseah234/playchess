@@ -451,4 +451,3 @@ class Pawn(BasePiece):
             else:
                 return False
         return False
-
