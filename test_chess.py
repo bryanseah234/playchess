@@ -2,11 +2,13 @@ import unittest
 
 from chess import Board, King, Queen, Bishop, Knight, Rook, Pawn
 
+
 def gameSetupWithKings():
     game = Board(debug=True)
     game.add((4, 0), King('white'))
     game.add((4, 7), King('black'))
     return game
+
 
 class TestIsValid(unittest.TestCase):
     def test_king_isvalid(self):
@@ -30,8 +32,8 @@ class TestIsValid(unittest.TestCase):
     def test_bishop_isvalid(self):
         '''Bishop move validation'''
         testdata = {Bishop('white'): [(2, 0), (0, 2), True],
-                Bishop('white'): [(2, 0), (1, 2), False],
-                }
+                    Bishop('white'): [(2, 0), (1, 2), False],
+                    }
         for piece, (start, end, ans) in testdata.items():
             result = piece.isvalid(start, end)
             self.assertEqual(result, ans)
@@ -62,6 +64,7 @@ class TestIsValid(unittest.TestCase):
         for piece, (start, end, ans) in testdata.items():
             result = piece.isvalid(start, end)
             self.assertEqual(result, ans)
+
 
 class TestCoreReqs(unittest.TestCase):
     def test_winner(self):
@@ -123,22 +126,23 @@ class TestCoreReqs(unittest.TestCase):
         game = Board(debug=True)
         game.start()
         for start, end in [
-                           ((4, 1), (4, 2)),
-                           ((3, 6), (3, 5)),
-                           ((3, 0), (7, 4)),
-                           ((5, 6), (5, 5)), # check
-                           ((7, 4), (4, 7)), # white win
-                           ]:
+            ((4, 1), (4, 2)),
+            ((3, 6), (3, 5)),
+            ((3, 0), (7, 4)),
+            ((5, 6), (5, 5)),  # check
+            ((7, 4), (4, 7)),  # white win
+        ]:
             game.update(start, end)
             game.display()
             game.next_turn()
+
 
 class TestBonusReqs(unittest.TestCase):
     def test_pawn_capture(self):
         '''Pawn captures diagonally'''
         game = gameSetupWithKings()
-        game.add((0,3), Pawn('white'))
-        game.add((1,4), Pawn('black'))
+        game.add((0, 3), Pawn('white'))
+        game.add((1, 4), Pawn('black'))
         game.turn = 'white'
         game.update((0, 3), (1, 4))
         self.assertEqual(game.get_piece((1, 4)).colour, 'white')
