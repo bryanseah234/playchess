@@ -117,7 +117,7 @@ class TestCoreReqs(unittest.TestCase):
             game.update((i, 1), (i, 0))
             self.assertEqual(game.get_piece((i, 0)).colour, 'black')
             self.assertEqual(game.get_piece((i, 0)).name, 'queen')
-    
+
     def test_quick_game(self):
         '''Row/col labels, player move, check message'''
         game = Board(debug=True)
@@ -142,7 +142,7 @@ class TestBonusReqs(unittest.TestCase):
         game.turn = 'white'
         game.update((0, 3), (1, 4))
         self.assertEqual(game.get_piece((1, 4)).colour, 'white')
-    
+
     def test_enpassant(self):
         '''Pawn can capture en passant'''
         game = gameSetupWithKings()
