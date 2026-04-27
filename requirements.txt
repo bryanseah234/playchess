@@ -1,0 +1,1 @@
+# No third-party dependencies - chess module is local, uses Python standard library
