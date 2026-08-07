@@ -27,7 +27,7 @@ PlayChess is a two-player chess game that runs in the terminal, featuring a clea
 
 ```bash
 # Clone the repository
-git clone https://github.com/bryanseah234/playchess.git
+git clone https://github.com/hongyime/playchess.git
 
 # Navigate to project directory
 cd playchess
@@ -73,4 +73,4 @@ MIT License
 
 ---
 
-**Author:** <a href="https://github.com/bryanseah234">bryanseah234</a>
+**Author:** <a href="https://github.com/hongyime">hongyime</a>
