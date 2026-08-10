@@ -133,3 +133,9 @@ dmypy.json
 
 #unrequired files
 moves.txt
+.env.*
+!.env.example
+node_modules/
+.venv/
+.next/
+coverage/
